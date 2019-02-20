@@ -25,7 +25,7 @@ const Search = (resolve) => {
   import('components/search/search').then((module) => {
     resolve(module);
   });
-}
+};
 
 export default new Router({
   routes: [
