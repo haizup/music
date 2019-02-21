@@ -5,7 +5,7 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import fastclick from 'fastclick';
-import components from 'components';
+import components from 'base/index';
 
 import 'common/stylus/index.styl';
 
