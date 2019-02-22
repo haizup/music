@@ -1,9 +1,9 @@
 <template>
   <div class="recommend" ref="recommend">
     <div class="recommend-content">
-      <div class="slider-wrapper">
+      <div v-if="recommends.length" class="slider-wrapper">
         <slider>
-          <div class="slider-item" v-for="(item, index) in recommends" :key="index">
+          <div v-for="(item, index) in recommends" :key="index">
             <a :href="item.linkUrl">
               <img :src="item.picUrl">
             </a>
@@ -22,23 +22,32 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {getRecommend} from 'api/recommend';
+  import {getRecommend, getDiscList} from 'api/recommend';
   import {ERR_OK} from 'api/config';
 
   export default {
     data() {
       return {
-        recommends: []
+        recommends: [],
+        discList: []
       };
     },
     created() {
       this._getRecommend();
+      this._getDiscList();
     },
     methods: {
       _getRecommend() {
         getRecommend().then((res) => {
           if (res.code === ERR_OK) {
             this.recommends = res.data.slider;
+          }
+        });
+      },
+      _getDiscList() {
+        getDiscList().then((res) => {
+          if (res.code === ERR_OK) {
+            this.discList = res.data.list;
           }
         });
       }

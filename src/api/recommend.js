@@ -1,6 +1,7 @@
 import jsonp from 'common/js/jsonp';
 import {commonParams, options} from './config';
 
+// 获取轮播图数据
 export function getRecommend() {
   const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg';
 
@@ -13,7 +14,12 @@ export function getRecommend() {
   return jsonp(url, data, options);
 }
 
-export function getDiscList(disstid) {
+// 获取歌单数据
+export function getDiscList() {
+  
+}
+
+export function getSongList(disstid) {
   const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg';
 
   const data = Object.assign({}, commonParams, {
