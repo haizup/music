@@ -14,7 +14,15 @@
       <div class="recommend-list">
         <h1 class="list-title">热门歌曲推荐</h1>
         <ul>
-          <li></li>
+          <li v-for="(item, index) in discList" :key="index" class="item">
+            <div class="icon">
+              <img v-lazy="item.imgurl">
+            </div>
+            <div class="text">
+              <h2 class="name" v-html="item.creator.name"></h2>
+              <p class="desc" v-html="item.dissname"></p>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
@@ -86,6 +94,9 @@
             flex: 0 0 3rem;
             width: 3rem;
             padding-right: 1rem;
+            img
+              width: 3rem;
+              height: 3rem;
           .text
             display: flex;
             flex-direction: column;
