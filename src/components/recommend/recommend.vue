@@ -1,31 +1,34 @@
 <template>
   <div class="recommend" ref="recommend">
-    <div class="recommend-content">
-      <div v-if="recommends.length" class="slider-wrapper">
-        <slider>
-          <div v-for="(item, index) in recommends" :key="index">
-            <a :href="item.linkUrl">
-              <img :src="item.picUrl">
-            </a>
-          </div>
-        </slider>
-      </div>
+    <scroll class="recommend-content" ref="scroll" :data="discList">
+      <div>
+        <div v-if="recommends.length" class="slider-wrapper">
+          <slider>
+            <div v-for="(item, index) in recommends" :key="index">
+              <a :href="item.linkUrl">
+                <!--scroll和fastclick点击事件冲突时，needsclick-->
+                <img class="needsclick" @load="loadImage" :src="item.picUrl">
+              </a>
+            </div>
+          </slider>
+        </div>
 
-      <div class="recommend-list">
-        <h1 class="list-title">热门歌曲推荐</h1>
-        <ul>
-          <li v-for="(item, index) in discList" :key="index" class="item">
-            <div class="icon">
-              <img v-lazy="item.imgurl">
-            </div>
-            <div class="text">
-              <h2 class="name" v-html="item.creator.name"></h2>
-              <p class="desc" v-html="item.dissname"></p>
-            </div>
-          </li>
-        </ul>
+        <div class="recommend-list">
+          <h1 class="list-title">热门歌曲推荐</h1>
+          <ul>
+            <li v-for="(item, index) in discList" :key="index" class="item">
+              <div class="icon">
+                <img v-lazy="item.imgurl">
+              </div>
+              <div class="text">
+                <h2 class="name" v-html="item.creator.name"></h2>
+                <p class="desc" v-html="item.dissname"></p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </scroll>
   </div>
 </template>
 
@@ -58,6 +61,12 @@
             this.discList = res.data.list;
           }
         });
+      },
+      loadImage() {
+        if (!this.checkLoaded) {
+          this.checkLoaded = true;
+          this.$refs.scroll.refresh();
+        }
       }
     }
   };
